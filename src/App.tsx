@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from './redux/hooks'
 import { getCountriesAction } from './redux/countries/countries'
+import DropDown from './components/DropDown'
 
 function App() {
   const countries = useAppSelector((state: any) => state.countries)
@@ -14,9 +15,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {countries.map((country: string) => (
-          <span>{country + ', '}</span>
-        ))}
+        <DropDown name="countries" options={countries[0] ? countries[0] : []} />
       </header>
     </div>
   )
