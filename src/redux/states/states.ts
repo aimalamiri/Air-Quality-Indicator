@@ -12,11 +12,18 @@ export default (state: [], action: any): Array<string> => {
   }
 }
 
-export const getStates = () => async (dispatch: ThunkDispatch<{}, {}, any>) => {
-  const response = await axios.get(`states&key=${API_KEY}`)
+export const getStates = (country: string) => async (
+  dispatch: ThunkDispatch<{}, {}, any>
+) => {
+  const response = await axios.get(`states?country=${country}&key=${API_KEY}`)
+  if (response.data.status === 'success') {
+    const states = Object.values(response.data.data).map((state: any) => {
+      return state.state
+    })
 
-  dispatch({
-    type: LIST_STATES,
-    payload: response.data,
-  })
+    dispatch({
+      type: LIST_STATES,
+      payload: states,
+    })
+  }
 }
